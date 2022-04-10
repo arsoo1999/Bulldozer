@@ -29,10 +29,40 @@ namespace Bulldozer
             pictureBoxTractor.Image = bmp;
         }
         /// <summary>
+        /// Метод установки объекта на форме
+        /// </summary>
+        /// <param name="rnd"></param>
+        private void SetObject(Random rnd)
+        {
+            _tractor?.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100),
+            pictureBoxTractor.Width, pictureBoxTractor.Height);
+            toolStripStatusLabelSpeed.Text = "Скорость:" + _tractor?.Speed;
+            toolStripStatusLabelWeight.Text = "Вес: " + _tractor?.Weight;
+            toolStripStatusLabelColor.Text = "Цвет: " + _tractor?.BodyColor.Name;
+            Draw();
+        }
+        /// <summary>
+        /// Проведение теста
+        /// </summary>
+        /// <param name="testObject"></param>
+        private void RunTest(AbstractTestObject testObject)
+        {
+            if (testObject == null || _tractor == null)
+            {
+                return;
+            }
+            var position = _tractor.GetCurrentPosition();
+            testObject.Init(_tractor);
+            testObject.SetPosition(pictureBoxTractor.Width,
+            pictureBoxTractor.Height);
+            MessageBox.Show(testObject.TestObject());
+            _tractor.SetPosition(position.Left, position.Top, pictureBoxTractor.Width,
+            pictureBoxTractor.Height);
+        }
+
+        /// <summary>
         /// Изменение размеров формы отрисовки
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void PictureBoxCars_Resize(object sender, EventArgs e)
         {
             _tractor?.ChangeBorders(pictureBoxTractor.Width, pictureBoxTractor.Height);
@@ -46,21 +76,25 @@ namespace Bulldozer
         private void ButtonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            _tractor = new Tractor();
-            _tractor.Init(rnd.Next(100, 300), rnd.Next(1000, 2000),
+            _tractor = new Tractor(rnd.Next(100, 300), rnd.Next(1000, 2000),
             Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)));
-            _tractor.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100),
-            pictureBoxTractor.Width, pictureBoxTractor.Height);
-            toolStripStatusLabelSpeed.Text = "Скорость:" + _tractor.Speed;
-            toolStripStatusLabelWeight.Text = "Вес: " + _tractor.Weight;
-            toolStripStatusLabelColor.Text = "Цвет: " + _tractor.BodyColor.Name;
-            Draw();
+            SetObject(rnd);
+        }
+        /// <summary>
+        /// Обработка нажатия кнопки "Модификация"
+        /// </summary>
+        private void ButtonCreateModify_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            _tractor = new FarmTractor(rnd.Next(100, 300), rnd.Next(1000, 2000),
+            Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256), rnd.Next(0, 256)),
+            Color.FromArgb(rnd.Next(0, 256), rnd.Next(0, 256),
+            rnd.Next(0, 256)), true, true);
+            SetObject(rnd);
         }
         /// <summary>
         /// Обработка нажатия кнопок управления
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ButtonMove_Click(object sender, EventArgs e)
         {
             //получаем имя кнопки
@@ -81,6 +115,18 @@ namespace Bulldozer
                     break;
             }
             Draw();
+        }
+        /// <summary>
+        /// Обработка нажатия кнопки "Провести тест по границам"
+        /// </summary>
+        private void ButtonRunBorderTest_Click(object sender, EventArgs e)
+        {
+            switch (comboBoxTest.SelectedIndex)
+            {
+                case 0:
+                    RunTest(new BordersTestObject());
+                    break;
+            }
         }
     }
 }

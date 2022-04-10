@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Bulldozer
 {
-    public class Tractor
+    public class Tractor : IDrawTractor
     {
         /// <summary>
         /// Скорость
@@ -19,14 +19,15 @@ namespace Bulldozer
         /// Цвет кузова
         /// </summary>
         public Color BodyColor { private set; get; }
+        public float Step => Speed * 100 / Weight;
         /// <summary>
         /// Левая координата отрисовки трактора
         /// </summary>
-        private float? _startPosX = null;
+        protected float? _startPosX = null;
         /// <summary>
         /// Верхняя кооридната отрисовки трактора
         /// </summary>
-        private float? _startPosY = null;
+        protected float? _startPosY = null;
         /// <summary>
         /// Ширина окна отрисовки
         /// </summary>
@@ -38,24 +39,40 @@ namespace Bulldozer
         /// <summary>
         /// Ширина отрисовки автомобиля
         /// </summary>
-        protected readonly int _tractorWidth = 80;
+        private readonly int _tractorWidth = 80;
         /// <summary>
         /// Высота отрисовки автомобиля
         /// </summary>
-        protected readonly int _tractorHeight = 50;
+        private readonly int _tractorHeight = 50;
+        /// <summary>
+        /// Признак, что объект переместился
+        /// </summary>
+        private bool _makeStep;
         /// <summary>
         /// Инициализация свойств
         /// </summary>
-        public void Init(int speed, float weight, Color bodyColor)
+        public Tractor(int speed, float weight, Color bodyColor)
         {
             Speed = speed;
             Weight = weight;
             BodyColor = bodyColor;
         }
         /// <summary>
+        /// Конструктор
+        /// </summary>
+        protected Tractor(int speed, float weight, Color bodyColor, int carWidth, int
+        carHeight)
+        {
+            Speed = speed;
+            Weight = weight;
+            BodyColor = bodyColor;
+            _tractorWidth = carWidth;
+            _tractorHeight = carHeight;
+        }
+        /// <summary>
         /// Установка позиции автомобиля
         /// </summary>
-        public void SetPosition(int x, int y, int width, int height)
+        public void SetPosition(float x, float y, int width, int height)
         {
             _startPosX = x;
             _startPosY = y;
@@ -82,8 +99,9 @@ namespace Bulldozer
         /// Изменение направления пермещения
         /// </summary>
         /// <param name="direction">Направление</param>
-        public void MoveTransport(Direction direction)
+        public virtual void MoveTransport(Direction direction, int leftIndent = 0, int topIndent = 0)
         {
+            _makeStep = false;
             if (!_pictureWidth.HasValue || !_pictureHeight.HasValue)
             {
                 return;
@@ -93,30 +111,34 @@ namespace Bulldozer
             {
                 // вправо
                 case Direction.Right:
-                    if (_startPosX + _tractorWidth + step < _pictureWidth)
+                    if (_startPosX + _tractorWidth + Step < _pictureWidth)
                     {
-                        _startPosX += step;
+                        _startPosX += Step;
+                        _makeStep = true;
                     }
                     break;
                 //влево
                 case Direction.Left:
-                    if (_startPosX - step > 0)
+                    if (_startPosX - Step > 0)
                     {
-                        _startPosX -= step;
+                        _startPosX -= Step;
+                        _makeStep = true;
                     }
                     break;
                 //вверх
                 case Direction.Up:
-                    if (_startPosY - step > 0)
+                    if (_startPosY - Step > 0)
                     {
-                        _startPosY -= step;
+                        _startPosY -= Step;
+                        _makeStep = true;
                     }
                     break;
                 //вниз
                 case Direction.Down:
-                    if (_startPosY + _tractorHeight + step < _pictureHeight)
+                    if (_startPosY + _tractorHeight + Step < _pictureHeight)
                     {
-                        _startPosY += step;
+                        _startPosY += Step;
+                        _makeStep = true;
                     }
                     break;
             }
@@ -125,7 +147,7 @@ namespace Bulldozer
         /// Отрисовка автомобиля
         /// </summary>
         /// <param name="g"></param>
-        public void DrawTransport(Graphics g)
+        public virtual void DrawTransport(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
@@ -167,6 +189,21 @@ namespace Bulldozer
             g.DrawEllipse(penCatok, _startPosX.Value + 25, _startPosY.Value + 60, 15, 15);
             g.DrawEllipse(penCatok, _startPosX.Value + 48, _startPosY.Value + 60, 15, 15);
             g.DrawEllipse(penCatok, _startPosX.Value + 68, _startPosY.Value + 60, 15, 15);
+        }
+        public bool MoveObject(Direction direction)
+        {
+            MoveTransport(direction);
+            return _makeStep;
+        }
+        public void DrawObject(Graphics g)
+        {
+            DrawTransport(g);
+        }
+        public (float Left, float Right, float Top, float Bottom)
+GetCurrentPosition()
+        {
+            return (_startPosX.Value, _startPosX.Value + _tractorWidth,
+            _startPosY.Value, _startPosY.Value + _tractorHeight);
         }
     }
 }
