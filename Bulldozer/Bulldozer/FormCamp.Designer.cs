@@ -30,8 +30,6 @@ namespace Bulldozer
         private void InitializeComponent()
         {
             this.pictureBoxParking = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -41,6 +39,7 @@ namespace Bulldozer
             this.button3 = new System.Windows.Forms.Button();
             this.maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonAdd_Click = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxParking)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -53,26 +52,6 @@ namespace Bulldozer
             this.pictureBoxParking.Size = new System.Drawing.Size(658, 444);
             this.pictureBoxParking.TabIndex = 0;
             this.pictureBoxParking.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(665, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 44);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Припарковать трактор";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.ButtonSetTractor_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(664, 63);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 44);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Припарковать фермерский трактор";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.ButtonSetFarmTractor_Click);
             // 
             // groupBox1
             // 
@@ -89,7 +68,7 @@ namespace Bulldozer
             this.groupBox1.Size = new System.Drawing.Size(132, 331);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Забрать машину";
+            this.groupBox1.Text = "Забрать бульдозер";
             // 
             // button5
             // 
@@ -97,7 +76,7 @@ namespace Bulldozer
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(123, 23);
             this.button5.TabIndex = 7;
-            this.button5.Text = "Добавить парковку";
+            this.button5.Text = "Добавить стоянку";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.ButtonAddParking_Click);
             // 
@@ -107,18 +86,18 @@ namespace Bulldozer
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(116, 23);
             this.button4.TabIndex = 6;
-            this.button4.Text = "Удалить парковку";
+            this.button4.Text = "Удалить стоянку";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.ButtonDelParking_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 93);
+            this.label2.Location = new System.Drawing.Point(35, 93);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 15);
+            this.label2.Size = new System.Drawing.Size(56, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Парковки:";
+            this.label2.Text = "Стоянки:";
             // 
             // textBoxNewCampName
             // 
@@ -162,14 +141,22 @@ namespace Bulldozer
             this.label1.TabIndex = 0;
             this.label1.Text = "Место:";
             // 
+            // buttonAdd_Click
+            // 
+            this.buttonAdd_Click.Location = new System.Drawing.Point(664, 12);
+            this.buttonAdd_Click.Name = "buttonAdd_Click";
+            this.buttonAdd_Click.Size = new System.Drawing.Size(123, 95);
+            this.buttonAdd_Click.TabIndex = 4;
+            this.buttonAdd_Click.Text = "Добавить Бульдозер";
+            this.buttonAdd_Click.UseVisualStyleBackColor = true;
+            // 
             // FormCamp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonAdd_Click);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBoxParking);
             this.Name = "FormCamp";
             this.Text = "FormCamp";
@@ -183,8 +170,6 @@ namespace Bulldozer
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxParking;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.MaskedTextBox maskedTextBox;
@@ -194,5 +179,6 @@ namespace Bulldozer
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxNewCampName;
         private System.Windows.Forms.ListBox listBoxLevels;
+        private System.Windows.Forms.Button buttonAdd_Click;
     }
 }

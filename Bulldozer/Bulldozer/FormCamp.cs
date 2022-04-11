@@ -163,5 +163,32 @@ namespace Bulldozer
                 MessageBox.Show("Парковка переполнена");
             }            
         }
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить автомобиль"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonSetCar_Click(object sender, EventArgs e)
+        {
+            var formCarConfig = new FormBuldozerConfig();
+            formCarConfig.AddEvent(AddTractor);
+            formCarConfig.Show();
+        }
+        private void AddTractor(Tractor tractor)
+        {
+            if (tractor != null && listBoxLevels.SelectedIndex > -1)
+            {
+                if
+                ((_campCollection[listBoxLevels.SelectedItem.ToString()]) + tractor)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
+
     }
 }

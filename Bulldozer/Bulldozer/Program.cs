@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace Bulldozer
 {
+    public delegate void TractorDelegate(Tractor tractor);
     static class Program
     {
         /// <summary>

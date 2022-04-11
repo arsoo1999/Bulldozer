@@ -23,6 +23,10 @@ namespace Bulldozer
         /// </summary>
         public bool BackSpoiler { private set; get; }
         /// <summary>
+        /// Смена дополнительного цвета
+        /// </summary>
+        public void SetDopColor(Color color) => DopColor = color;
+        /// <summary>
         /// Инициализация свойств
         /// </summary>
         /// <param name="maxSpeed">Скорость</param>
@@ -82,5 +86,6 @@ namespace Bulldozer
 
             }
         }
+
     }
 }

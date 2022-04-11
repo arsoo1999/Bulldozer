@@ -7,6 +7,8 @@ namespace Bulldozer
 {
     public class Tractor : IDrawTractor
     {
+        public void SetMainColor(Color color) => BodyColor = color;
+
         /// <summary>
         /// Скорость
         /// </summary>

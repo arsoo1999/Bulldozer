@@ -34,5 +34,10 @@ namespace Bulldozer
         /// Получение текущей позиции объекта
         /// </summary>
         (float Left, float Right, float Top, float Bottom) GetCurrentPosition();
+        /// <summary>
+        /// Смена основного цвета
+        /// </summary>
+        /// <param name="color"></param>
+        void SetMainColor(Color color);
     }
 }
