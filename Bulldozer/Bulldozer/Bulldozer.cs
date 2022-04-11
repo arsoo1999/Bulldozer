@@ -207,5 +207,24 @@ GetCurrentPosition()
             return (_startPosX.Value, _startPosX.Value + _tractorWidth,
             _startPosY.Value, _startPosY.Value + _tractorHeight);
         }
+        /// <summary>
+        /// Разделитель для записи информации по объекту в файл
+        /// </summary>
+        protected readonly char _separator = ';';
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info">Информация по объекту</param>
+        public Tractor(string info)
+        {
+            string[] strs = info.Split(_separator);
+            if (strs.Length >= 3)
+            {
+                Speed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                BodyColor = Color.FromName(strs[2]);
+            }
+        }
+        public override string ToString() =>$"{Speed}{_separator}{Weight}{_separator}{BodyColor.Name}";
     }
 }

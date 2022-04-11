@@ -86,6 +86,21 @@ namespace Bulldozer
 
             }
         }
-
+        /// <summary>
+        /// Конструктор для загрузки с файла
+        /// </summary>
+        /// <param name="info"></param>
+        public FarmTractor(string info) : base(info)
+        {
+            string[] strs = info.Split(_separator);
+            if (strs.Length == 8)
+            {
+                DopColor = Color.FromName(strs[3]);
+                FrontSpoiler = Convert.ToBoolean(strs[4]);
+                BackSpoiler = Convert.ToBoolean(strs[5]);
+            }
+        }
+        public override string ToString() =>
+        $"{base.ToString()}{_separator}{DopColor.Name}{_separator}{FrontSpoiler}{_separator}{ BackSpoiler}";
     }
 }

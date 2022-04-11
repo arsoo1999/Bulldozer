@@ -106,5 +106,16 @@ namespace Bulldozer
             }
 
         }
+        /// <summary>
+        /// Функция получения элементов из списка
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<T> GetNext()
+        {
+            foreach (var elem in _places)
+            {
+                yield return elem;
+            }
+        }
     }
 }
