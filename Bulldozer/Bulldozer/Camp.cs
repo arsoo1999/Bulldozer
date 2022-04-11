@@ -12,9 +12,13 @@ namespace Bulldozer
     public class Camp<T> where T : class, IDrawTractor
     {
         /// <summary>
-        /// Массив объектов, которые храним
+        /// Список объектов, которые храним
         /// </summary>
-        private readonly T[] _places;
+        private readonly List<T> _places;
+        /// <summary>
+        /// Максимальное количество мест на парковке
+        /// </summary>
+        private readonly int _maxCount;
         /// <summary>
         /// Ширина окна отрисовки
         /// </summary>
@@ -38,9 +42,10 @@ namespace Bulldozer
         {
             int width = picWidth / _placeSizeWidth;
             int height = picHeight / _placeSizeHeight;
-            _places = new T[width * height];
+            _maxCount = width * height;
             _pictureWidth = picWidth;
             _pictureHeight = picHeight;
+            _places = new List<T>();
         }
         /// <summary>
         /// Перегрузка оператора сложения
@@ -48,16 +53,13 @@ namespace Bulldozer
         /// </summary>
         public static bool operator +(Camp<T> p, T tractor)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            for (int i = 0; i < p._maxCount; i++)
             {
-                if (p._places[i] == null)
-                {
                     p._places[i] = tractor;
                     p._places[i].SetPosition(4 + i / 4 * p._placeSizeWidth + 4,
                      i % 4 * p._placeSizeHeight + 15, p._pictureWidth,
                     p._pictureHeight);
                     return true;
-                }
             }
             return false;
         }
@@ -67,14 +69,13 @@ namespace Bulldozer
         /// </summary>
         public static T operator -(Camp<T> p, int index)
         {
-            if (index < 0 || index > p._places.Length)
+            if (index < 0 || index > p._maxCount)
             {
                 return null;
             }
                 T tractor = p._places[index];
                 p._places[index] = null;
                 return tractor;
-            return null;
         }
         /// <summary>
         /// Метод отрисовки парковки
@@ -82,9 +83,11 @@ namespace Bulldozer
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; i++)
             {
-                _places[i]?.DrawTractor(g);
+                _places[i].SetPosition(4 + i / 4 * _placeSizeWidth + 4, i % 4 * _placeSizeHeight + 15, _pictureWidth, _pictureHeight);
+                _places[i].DrawTractor(g);
+
             }
         }
         /// <summary>
@@ -95,14 +98,11 @@ namespace Bulldozer
             Pen pen = new Pen(Color.Black, 3);
             for (int i = 0; i < _pictureWidth / _placeSizeWidth; i++)
             {
-                for (int j = 0; j < _pictureHeight / _placeSizeHeight + 1;
-                ++j)
+                for (int j = 0; j < _pictureHeight / _placeSizeHeight + 1; ++j)
                 {//линия рамзетки места
-                    g.DrawLine(pen, i * _placeSizeWidth, j *
-                    _placeSizeHeight, i * _placeSizeWidth + _placeSizeWidth / 2, j * _placeSizeHeight);
+                    g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + _placeSizeWidth / 2, j * _placeSizeHeight);
                 }
-                g.DrawLine(pen, i * _placeSizeWidth, 0, i *
-                _placeSizeWidth, (_pictureHeight / _placeSizeHeight) * _placeSizeHeight);
+                g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, (_pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
 
         }

@@ -13,25 +13,82 @@ namespace Bulldozer
         /// <summary>
         /// Объект от класса-парковки
         /// </summary>
-        private readonly Camp<IDrawTractor> camp;
+        private readonly CampCollection _campCollection;
 
 
         public FormCamp()
         {
             InitializeComponent();
-            camp = new Camp<IDrawTractor>(pictureBoxParking.Width, pictureBoxParking.Height);
+            _campCollection = new CampCollection(pictureBoxParking.Width, pictureBoxParking.Height);
             Draw();
+        }
+        /// <summary>
+        /// Заполнение listBoxLevels
+        /// </summary>
+        private void ReloadLevels()
+        {
+            int index = listBoxLevels.SelectedIndex;
+            listBoxLevels.Items.Clear();
+            for (int i = 0; i < _campCollection.Keys.Count; i++)
+            {
+                listBoxLevels.Items.Add(_campCollection.Keys[i]);
+            }
+            if (listBoxLevels.Items.Count > 0 && (index == -1 || index >=
+            listBoxLevels.Items.Count))
+            {
+                listBoxLevels.SelectedIndex = 0;
+            }
+            else if (listBoxLevels.Items.Count > 0 && index > -1 && index <
+            listBoxLevels.Items.Count)
+            {
+                listBoxLevels.SelectedIndex = index;
+            }
         }
         /// <summary>
         /// Метод отрисовки парковки
         /// </summary>
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxParking.Width,
-            pictureBoxParking.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            camp.Draw(gr);
-            pictureBoxParking.Image = bmp;
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                //если выбран один из пуктов в listBox (при старте программы ни один пункт не будет выбран и может возникнуть ошибка, если мы попытаемся обратиться к элементу listBox)
+                Bitmap bmp = new Bitmap(pictureBoxParking.Width, pictureBoxParking.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                _campCollection[listBoxLevels.SelectedItem.ToString()].Draw(gr);
+                pictureBoxParking.Image = bmp;
+            }
+        }
+        /// <summary>
+        /// Обработка нажатия кнопки "Добавить парковку"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonAddParking_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxNewCampName.Text))
+            {
+                MessageBox.Show("Введите название парковки", "Ошибка",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _campCollection.AddParking(textBoxNewCampName.Text);
+            ReloadLevels();
+        }
+        /// <summary>
+        /// Обработка нажатия кнопки "Удалить парковку"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDelParking_Click(object sender, EventArgs e)
+        {
+            if (listBoxLevels.SelectedIndex > -1)
+            {
+                if (MessageBox.Show($"Удалить парковку { listBoxLevels.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _campCollection.DelParking(listBoxLevels.SelectedItem.ToString());
+                    ReloadLevels();
+                }
+            }
         }
         /// <summary>
         /// Обработка нажатия кнопки "Припарковать автомобиль"
@@ -40,10 +97,13 @@ namespace Bulldozer
         /// <param name="e"></param>
         private void ButtonSetTractor_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                AddToParking(new Tractor(100, 1000, dialog.Color));
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    AddToParking(new Tractor(100, 1000, dialog.Color));
+                }
             }
         }
         /// <summary>
@@ -51,14 +111,17 @@ namespace Bulldozer
         /// </summary>
         private void ButtonSetFarmTractor_Click(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    AddToParking(new FarmTractor(100, 1000, dialog.Color,
-                    dialogDop.Color, true, true));
+                    ColorDialog dialogDop = new ColorDialog();
+                    if (dialogDop.ShowDialog() == DialogResult.OK)
+                    {
+                        AddToParking(new FarmTractor(100, 1000,
+                        dialog.Color, dialogDop.Color, true, true));
+                    }
                 }
             }
         }
@@ -67,9 +130,10 @@ namespace Bulldozer
         /// </summary>
         private void ButtonTakeTractor_Click(object sender, EventArgs e)
         {
-            if (maskedTextBox.Text != "")
+            if (listBoxLevels.SelectedIndex > -1 && maskedTextBox.Text !=
+"")
             {
-                var tractor = camp - Convert.ToInt32(maskedTextBox.Text);
+                var tractor = _campCollection[listBoxLevels.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBox.Text);
                 if (tractor != null)
                 {
                     FormBulldozer form = new FormBulldozer();
@@ -80,18 +144,24 @@ namespace Bulldozer
             }
         }
         /// <summary>
+        /// Метод обработки выбора элемента на listBoxLevels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListBoxLevels_SelectedIndexChanged(object sender, EventArgs e) => Draw();
+        /// <summary>
         /// Добавление объекта в класс-хранилище
         /// </summary>
         private void AddToParking(Tractor tractor)
         {
-            if (camp + tractor)
+            if(_campCollection[listBoxLevels.SelectedItem.ToString()] + tractor)
             {
                 Draw();
             }
             else
             {
                 MessageBox.Show("Парковка переполнена");
-            }
+            }            
         }
     }
 }

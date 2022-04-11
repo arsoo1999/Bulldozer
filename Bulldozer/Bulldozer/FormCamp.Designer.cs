@@ -33,6 +33,11 @@ namespace Bulldozer
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxNewCampName = new System.Windows.Forms.TextBox();
+            this.listBoxLevels = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
             this.maskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,6 +76,11 @@ namespace Bulldozer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBoxNewCampName);
+            this.groupBox1.Controls.Add(this.listBoxLevels);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.maskedTextBox);
             this.groupBox1.Controls.Add(this.label1);
@@ -80,6 +90,51 @@ namespace Bulldozer
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Забрать машину";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(3, 142);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(123, 23);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Добавить парковку";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.ButtonAddParking_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(6, 271);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(116, 23);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Удалить парковку";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.ButtonDelParking_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 93);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Парковки:";
+            // 
+            // textBoxNewCampName
+            // 
+            this.textBoxNewCampName.Location = new System.Drawing.Point(16, 111);
+            this.textBoxNewCampName.Name = "textBoxNewCampName";
+            this.textBoxNewCampName.Size = new System.Drawing.Size(100, 23);
+            this.textBoxNewCampName.TabIndex = 4;
+            // 
+            // listBoxLevels
+            // 
+            this.listBoxLevels.FormattingEnabled = true;
+            this.listBoxLevels.ItemHeight = 15;
+            this.listBoxLevels.Location = new System.Drawing.Point(2, 171);
+            this.listBoxLevels.Name = "listBoxLevels";
+            this.listBoxLevels.Size = new System.Drawing.Size(124, 94);
+            this.listBoxLevels.TabIndex = 3;
             // 
             // button3
             // 
@@ -134,5 +189,10 @@ namespace Bulldozer
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.MaskedTextBox maskedTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxNewCampName;
+        private System.Windows.Forms.ListBox listBoxLevels;
     }
 }
