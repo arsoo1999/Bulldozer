@@ -42,7 +42,7 @@ namespace Bulldozer
         {
             base.MoveTransport(direction,leftIndent,topIndent);
         }
-        public override void DrawTransport(Graphics g)
+        public override void DrawTractor(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
@@ -68,7 +68,7 @@ namespace Bulldozer
                 g.FillRectangle(dopBrush, _startPosX.Value - 29, _startPosY.Value + 68, 4, 15);
                 g.FillRectangle(dopBrush, _startPosX.Value - 38, _startPosY.Value + 60, 4, 15);
             }
-            base.DrawTransport(g);
+            base.DrawTractor(g);
             if (FrontSpoiler)
             {
                 //Границы отвала

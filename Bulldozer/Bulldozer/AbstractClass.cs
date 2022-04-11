@@ -58,28 +58,28 @@ namespace Bulldozer
             {
                 return "Объект не установлен";
             }
-            while (_object.MoveObject(Direction.Right))
+            while (_object.MoveTractor(Direction.Right))
             {
                 if (_object.GetCurrentPosition().Right > _pictureWidth)
                 {
                     return "Объект вышел за правый край";
                 }
             }
-            while (_object.MoveObject(Direction.Down))
+            while (_object.MoveTractor(Direction.Down))
             {
                 if (_object.GetCurrentPosition().Bottom > _pictureHeight)
                 {
                     return "Объект вышел за нижний край";
                 }
             }
-            while (_object.MoveObject(Direction.Left))
+            while (_object.MoveTractor(Direction.Left))
             {
                 if (_object.GetCurrentPosition().Bottom > _pictureHeight)
                 {
                     return "Объект вышел за левый край";
                 }
             }
-            while (_object.MoveObject(Direction.Up))
+            while (_object.MoveTractor(Direction.Up))
             {
                 if (_object.GetCurrentPosition().Bottom > _pictureHeight)
                 {

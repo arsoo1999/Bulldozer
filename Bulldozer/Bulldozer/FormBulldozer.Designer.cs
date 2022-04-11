@@ -29,63 +29,13 @@ namespace Bulldozer
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabelSpeed = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelWeight = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabelColor = new System.Windows.Forms.ToolStripStatusLabel();
             this.buttonUp = new System.Windows.Forms.Button();
             this.pictureBoxTractor = new System.Windows.Forms.PictureBox();
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonLeft = new System.Windows.Forms.Button();
             this.buttonRight = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.comboBoxTest = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTractor)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(12, 402);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Создать";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.ButtonCreate_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelSpeed,
-            this.toolStripStatusLabelWeight,
-            this.toolStripStatusLabelColor});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabelSpeed
-            // 
-            this.toolStripStatusLabelSpeed.Name = "toolStripStatusLabelSpeed";
-            this.toolStripStatusLabelSpeed.Size = new System.Drawing.Size(62, 17);
-            this.toolStripStatusLabelSpeed.Text = "Скорость:";
-            // 
-            // toolStripStatusLabelWeight
-            // 
-            this.toolStripStatusLabelWeight.Name = "toolStripStatusLabelWeight";
-            this.toolStripStatusLabelWeight.Size = new System.Drawing.Size(29, 17);
-            this.toolStripStatusLabelWeight.Text = "Вес:";
-            // 
-            // toolStripStatusLabelColor
-            // 
-            this.toolStripStatusLabelColor.Name = "toolStripStatusLabelColor";
-            this.toolStripStatusLabelColor.Size = new System.Drawing.Size(36, 17);
-            this.toolStripStatusLabelColor.Text = "Цвет:";
             // 
             // buttonUp
             // 
@@ -108,7 +58,6 @@ namespace Bulldozer
             this.pictureBoxTractor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxTractor.TabIndex = 3;
             this.pictureBoxTractor.TabStop = false;
-            this.pictureBoxTractor.Resize += new System.EventHandler(this.PictureBoxCars_Resize);
             // 
             // buttonDown
             // 
@@ -146,55 +95,19 @@ namespace Bulldozer
             this.buttonRight.UseVisualStyleBackColor = true;
             this.buttonRight.Click += new System.EventHandler(this.ButtonMove_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(12, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Провести тест";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.ButtonRunBorderTest_Click);
-            // 
-            // comboBoxTest
-            // 
-            this.comboBoxTest.FormattingEnabled = true;
-            this.comboBoxTest.Location = new System.Drawing.Point(127, 13);
-            this.comboBoxTest.Name = "comboBoxTest";
-            this.comboBoxTest.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxTest.TabIndex = 8;
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Location = new System.Drawing.Point(93, 402);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(101, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Модификация";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.ButtonCreateModify_Click);
-            // 
             // FormBulldozer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.comboBoxTest);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonRight);
             this.Controls.Add(this.buttonLeft);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonUp);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBoxTractor);
             this.Name = "FormBulldozer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bulldozer";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTractor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -202,20 +115,11 @@ namespace Bulldozer
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelSpeed;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelWeight;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelColor;
         private System.Windows.Forms.Button buttonUp;
         private System.Windows.Forms.PictureBox pictureBoxTractor;
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonLeft;
         private System.Windows.Forms.Button buttonRight;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox comboBoxTest;
-        private System.Windows.Forms.Button button3;
     }
 }
 

@@ -60,14 +60,14 @@ namespace Bulldozer
         /// <summary>
         /// Конструктор
         /// </summary>
-        protected Tractor(int speed, float weight, Color bodyColor, int carWidth, int
-        carHeight)
+        protected Tractor(int speed, float weight, Color bodyColor, int tractorWidth, int
+        tractorHeight)
         {
             Speed = speed;
             Weight = weight;
             BodyColor = bodyColor;
-            _tractorWidth = carWidth;
-            _tractorHeight = carHeight;
+            _tractorWidth = tractorWidth;
+            _tractorHeight = tractorHeight;
         }
         /// <summary>
         /// Установка позиции автомобиля
@@ -147,7 +147,7 @@ namespace Bulldozer
         /// Отрисовка автомобиля
         /// </summary>
         /// <param name="g"></param>
-        public virtual void DrawTransport(Graphics g)
+        public virtual void DrawTractor(Graphics g)
         {
             if (!_startPosX.HasValue || !_startPosY.HasValue)
             {
@@ -190,14 +190,14 @@ namespace Bulldozer
             g.DrawEllipse(penCatok, _startPosX.Value + 48, _startPosY.Value + 60, 15, 15);
             g.DrawEllipse(penCatok, _startPosX.Value + 68, _startPosY.Value + 60, 15, 15);
         }
-        public bool MoveObject(Direction direction)
+        public bool MoveTractor(Direction direction)
         {
             MoveTransport(direction);
             return _makeStep;
         }
         public void DrawObject(Graphics g)
         {
-            DrawTransport(g);
+            DrawTractor(g);
         }
         public (float Left, float Right, float Top, float Bottom)
 GetCurrentPosition()

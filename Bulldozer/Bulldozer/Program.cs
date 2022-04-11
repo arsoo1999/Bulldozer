@@ -16,7 +16,7 @@ namespace Bulldozer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormBulldozer());
+            Application.Run(new FormCamp());
         }
     }
 }

@@ -25,11 +25,11 @@ namespace Bulldozer
         /// <summary>
         /// Изменение направления пермещения объекта
         /// </summary>
-        bool MoveObject(Direction direction);
+        bool MoveTractor(Direction direction);
         /// <summary>
         /// Отрисовка объекта
         /// </summary>
-        void DrawObject(Graphics g);
+        void DrawTractor(Graphics g);
         /// <summary>
         /// Получение текущей позиции объекта
         /// </summary>
