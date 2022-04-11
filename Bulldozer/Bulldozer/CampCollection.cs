@@ -12,6 +12,7 @@ namespace Bulldozer
     /// </summary>
     public class CampCollection
     {
+        protected readonly char _separator = ';';
         /// <summary>
         /// Словарь (хранилище) с парковками
         /// </summary>
@@ -83,13 +84,13 @@ namespace Bulldozer
                 foreach (var level in _campStages)
                 {
                     //Начинаем парковку
-                    WriteToFile($"Parking{separator}{level.Key}{Environment.NewLine}", fs);
+                    WriteToFile($"Parking{_separator}{level.Key}{Environment.NewLine}", fs);
                     foreach (var tractor in level.Value.GetNext())
                     {
                         //если место не пустое
                         if (tractor != null)
                         {
-                            WriteToFile($"{tractor.GetType().Name}{ separator}{ tractor}{ Environment.NewLine}", fs);
+                            WriteToFile($"{tractor.GetType().Name}{ _separator}{ tractor}{ Environment.NewLine}", fs);
                         }
 
                     }
@@ -135,18 +136,18 @@ namespace Bulldozer
                 if (strs[i].Contains("Parking"))
                 {
                     //начинаем новую парковку
-                    key = strs[i].Split(separator)[1];
+                    key = strs[i].Split(_separator)[1];
                     _campStages.Add(key, new
                     Camp<IDrawTractor>(_pictureWidth, _pictureHeight));
                     continue;
                 }
-                if (strs[i].Split(separator)[0] == "Tractor")
+                if (strs[i].Split(_separator)[0] == "Tractor")
                 {
-                    tractor = new Tractor(strs[i].Split(separator)[1]);
+                    tractor = new Tractor(strs[i].Split(_separator)[1]);
                 }
-                else if (strs[i].Split(separator)[0] == "FarmTractor")
+                else if (strs[i].Split(_separator)[0] == "FarmTractor")
                 {
-                    tractor = new FarmTractor(strs[i].Split(separator)[1]);
+                    tractor = new FarmTractor(strs[i].Split(_separator)[1]);
                 }
                 var result = _campStages[key] + tractor;
                 if (!result)
