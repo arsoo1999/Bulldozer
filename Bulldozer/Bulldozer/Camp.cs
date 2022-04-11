@@ -53,6 +53,10 @@ namespace Bulldozer
         /// </summary>
         public static bool operator +(Camp<T> p, T tractor)
         {
+            if (p._places.Count == p._maxCount)
+            {
+                throw new CampOverflowException();
+            }
             for (int i = 0; i < p._maxCount; i++)
             {
                     p._places[i] = tractor;
@@ -76,6 +80,7 @@ namespace Bulldozer
                 T tractor = p._places[index];
                 p._places[index] = null;
                 return tractor;
+                throw new CampNotFoundException(index);
         }
         /// <summary>
         /// Метод отрисовки парковки

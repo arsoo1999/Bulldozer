@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using NLog;
 
 namespace Bulldozer
 {
@@ -14,13 +15,17 @@ namespace Bulldozer
         /// Объект от класса-парковки
         /// </summary>
         private readonly CampCollection _campCollection;
-
+        /// <summary>
+        /// Логгер
+        /// </summary>
+        private readonly Logger logger;
 
         public FormCamp()
         {
             InitializeComponent();
             _campCollection = new CampCollection(pictureBoxParking.Width, pictureBoxParking.Height);
-            Draw();
+            logger = LogManager.GetCurrentClassLogger();
+
         }
         /// <summary>
         /// Заполнение listBoxLevels
@@ -71,6 +76,7 @@ namespace Bulldozer
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            logger.Info($"Добавили парковку {textBoxNewCampName.Text}");
             _campCollection.AddParking(textBoxNewCampName.Text);
             ReloadLevels();
         }
@@ -86,6 +92,7 @@ namespace Bulldozer
                 if (MessageBox.Show($"Удалить парковку { listBoxLevels.SelectedItem}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     _campCollection.DelParking(listBoxLevels.SelectedItem.ToString());
+                    logger.Info($"Удалили парковку{ listBoxLevels.SelectedItem}");
                     ReloadLevels();
                 }
             }
@@ -133,15 +140,34 @@ namespace Bulldozer
             if (listBoxLevels.SelectedIndex > -1 && maskedTextBox.Text !=
 "")
             {
-                var tractor = _campCollection[listBoxLevels.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBox.Text);
-                if (tractor != null)
+                try
                 {
-                    FormBulldozer form = new FormBulldozer();
-                    form.SetTractor(tractor);
-                    form.ShowDialog();
+                    var tractor = _campCollection[listBoxLevels.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBox.Text);
+                    if (tractor != null)
+                    {
+                        FormBulldozer form = new FormBulldozer();
+                        form.SetTractor(tractor);
+                        form.ShowDialog();
+                    }
+                    logger.Info($"Изъят автомобиль {tractor} с места{ maskedTextBox.Text}");
+                    Draw();
                 }
-                Draw();
+                catch (CampNotFoundException ex)
+                {
+                    MessageBox.Show(ex.Message, "Не найдено",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+        }
+        private void ListBoxParkings_SelectedIndexChanged(object sender,EventArgs e)
+        {
+            Draw();
+            logger.Info($"Перешли на парковку{ listBoxLevels.SelectedItem}");
         }
         /// <summary>
         /// Метод обработки выбора элемента на listBoxLevels
@@ -178,14 +204,27 @@ namespace Bulldozer
         {
             if (tractor != null && listBoxLevels.SelectedIndex > -1)
             {
-                if
-                ((_campCollection[listBoxLevels.SelectedItem.ToString()]) + tractor)
+                try
                 {
+                    if((_campCollection[listBoxLevels.SelectedItem.ToString()]) + tractor)
+                    {
+                        Draw();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Машину не удалось поставить");
+                    }
                     Draw();
                 }
-                else
+                catch (CampOverflowException ex)
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    MessageBox.Show(ex.Message, "Переполнение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -198,18 +237,21 @@ namespace Bulldozer
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_campCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    _campCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно",
                     "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " +
+                    saveFileDialog.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, ex.GetType().Name,MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Не сохранилось", "Результат",MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
+            }
         /// <summary>
         /// Обработка нажатия пункта меню "Загрузить"
         /// </summary>
@@ -219,15 +261,20 @@ namespace Bulldozer
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_campCollection.LoadData(openFileDialog.FileName))
+                try
                 {
+                    _campCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузили", "Результат",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " +
+                    openFileDialog.FileName);
                     ReloadLevels();
                     Draw();
                 }
-                else
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message, ex.GetType().Name,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                     MessageBox.Show("Не загрузили", "Результат",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

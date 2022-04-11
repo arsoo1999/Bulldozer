@@ -107,7 +107,7 @@ namespace Bulldozer
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new Exception("Файл не найден");
             }
             string bufferTextFromFile = "";
             using (FileStream fs = new FileStream(filename, FileMode.Open))
@@ -124,7 +124,7 @@ namespace Bulldozer
             if (!strs[0].Contains("CampCollection"))
             {
                 //если нет такой записи, то это не те данные
-                return false;
+                throw new Exception("Неверный формат файла");
             }
             //очищаем записи
             _campStages.Clear();
